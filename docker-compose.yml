@@ -1,0 +1,26 @@
+services:
+  api:
+    build:
+      context: ./api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/app
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./front
+    ports:
+      - "80:80"
+    volumes:
+      - ./front:/app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
