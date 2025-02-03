@@ -31,5 +31,13 @@ cursor.execute('''
         id_categoria TEXT
     )
 ''')
+
+cursor.execute("INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)", ("Hogar", "Quehaceres de la casa"))
+cursor.execute("INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)", ("Estudio", "Tu puedes, no abandones la carrera"))
+cursor.execute("INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)", ("Trabajo", "Vida laboral"))
+cursor.execute("INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)", ("Social", "Reuniones con familia y amigos"))
+cursor.execute("INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)", ("Otros", "Categoria comodin"))
+
+
 conexion.commit()
 print("Si sirvió")

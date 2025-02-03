@@ -1,0 +1,33 @@
+<form (ngSubmit)="iniciarSesion()">
+  <h1>Iniciar sesión:</h1>
+    <div>
+      <label for="nombre">Usuario:</label>
+      <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" required>
+    </div>
+    <div>
+      <label for="contrasenia">Contraseña:</label>
+      <input type="password" id="contrasenia" [(ngModel)]="contrasenia" name="contrasenia" required>
+    </div>
+    <button type="submit">Validar</button>
+    <p *ngIf="errorMensaje" class="error">{{ errorMensaje }}</p>
+</form>
+
+  <hr>
+
+<form (ngSubmit)="registrarse()">
+  <h1>Registrarse</h1>
+  <div>
+    <label for="nombre">Crea tu nombre de usuario:</label>
+    <input type="text" id="nombre" [(ngModel)]="nombreRegistro" name="nombre" required>
+  </div>
+  <div>
+    <label for="contrasenia">Crea tu contraseña:</label>
+    <input type="password" id="contrasenia" [(ngModel)]="contraseniaRegistro" name="contrasenia" required>
+  </div>
+  <div>
+    <label for="contrasenia">Adjunta el link de tu imagen:</label>
+    <input type="img" id="img" [(ngModel)]="imgRegistro" name="img" required>
+  </div>
+  <button type="submit">Crear usuario</button>
+  <p *ngIf="registroMessage" class="error">{{ registroMessage }}</p>
+</form>

@@ -1,47 +1,63 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TareasService {
-  private apiUrl = 'http://localhost:5000'; // URL de la API Flask
+  private apiUrl = 'http://127.0.0.1:5000';
 
   constructor(private http: HttpClient) {}
 
-  // Crear usuario
+  // Obtener el token desde localStorage
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); // esto es pata recuperar token
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
   crearUsuario(usuario: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/usuarios`, usuario);
   }
 
-  // Iniciar sesión
   iniciarSesion(credenciales: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/usuarios/iniciar-sesion`, credenciales);
   }
 
-  // Obtener tareas de un usuario
-  obtenerTareasUsuario(idUsuario: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/usuarios/${idUsuario}/tareas`);
+  obtenerTareasUsuario(idUsuario: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuarios/${idUsuario}/tareas`, {
+      headers: this.getAuthHeaders()
+    });
   }
 
-  // Crear tarea
   crearTarea(tarea: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/tareas`, tarea);
+    return this.http.post(`${this.apiUrl}/tareas`, tarea, {
+      //headers: this.getAuthHeaders()
+    });
   }
 
-  // Actualizar tarea
-  actualizarTarea(id: number, tarea: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/tareas/${id}`, tarea);
+  actualizarTarea(id: string, tarea: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/tareas/${id}`, tarea, {
+     // headers: this.getAuthHeaders()
+    });
   }
 
-  // Eliminar tarea
-  eliminarTarea(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/tareas/${id}`);
+  eliminarTarea(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/tareas/${id}`, {
+      //headers: this.getAuthHeaders()
+    });
   }
 
-  // Obtener una tarea por ID
-  obtenerTarea(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/tareas/${id}`);
+  obtenerTarea(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/tareas/${id}`, {
+      //headers: this.getAuthHeaders()
+    });
+  }
+
+  obtenerUsuario(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuarios/${id}`, {
+    });
   }
 }

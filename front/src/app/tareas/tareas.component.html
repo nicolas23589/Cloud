@@ -1,0 +1,149 @@
+<div class="divcenter">
+    <div class="perfil">
+        <h1>Bienvenido, {{ user.nombre }}!</h1>
+        <img src="{{ user.imagen }}" alt="Foto de perfil" class="foto-perfil">
+    </div>
+
+    <div class="contenedor">
+        <h3>Crear tarea:</h3>
+        
+        <div class="campo">
+            <label for="f1C">Nombre de la tarea:</label>
+            <textarea name="f1C" id="f1C" [(ngModel)]="newTask.texto"></textarea>
+        </div>
+        
+        <div class="campo">
+            <label for="categoria_create">Categoría:</label>
+            <select name="categoria_create" id="categoria_create" [(ngModel)]="newTask.id_categoria">
+                <option [value]="1">Hogar</option>
+                <option [value]="2">Estudio</option>
+                <option [value]="3">Trabajo</option>
+                <option [value]="4">Social</option>
+                <option [value]="5">Otros</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="f2C">Fecha tentativa:</label>
+            <input type="date" name="f2C" id="f2C" [(ngModel)]="newTask.fecha_tentativa">
+        </div>
+
+        <p class="info">Por defecto, todas las tareas se crean con estado pendiente</p>
+        <button class="btnVerde" (click)="createTask()">Crear</button>
+        <p><strong>Estado:</strong> {{ newTaskConfirmation }}</p>
+    </div>
+
+</div>
+
+<hr>
+
+<h2>Estas son tus tareas registradas:</h2>
+
+<h3>Categoría: Hogar</h3>
+<h4 class="descripcion">Agrupación de los quehaceres de la casa</h4>
+
+<div *ngFor="let tarea of tareas" class="tarea">
+    <div *ngIf="tarea.nombre === 'Hogar'">
+        <p><strong>Tarea:</strong> {{ tarea.texto }}</p>
+        <p><strong>Estado:</strong> {{ tarea.estado }}</p>
+        <p><strong>Fecha de creación:</strong> {{ tarea.fecha_creacion }}</p>
+        
+        <div class="campo">
+            <label for="f2">Fecha tentativa:</label>
+            <input type="date" name="f2" id="f2" [(ngModel)]="tarea.fecha_tentativa">
+        </div>
+
+        <button class="btnRojo" (click)="deleteTask(tarea)">Eliminar</button>
+        <button class="btnVerde" (click)="updateTask(tarea)">Guardar Cambios</button>
+        
+        <p>{{ tarea.status }}</p>
+        <hr>
+    </div>
+</div>
+
+
+<h3>Categoría: Estudio</h3>
+<h4 class="descripcion">Parciales, lecturas, proyectos, etc.</h4>
+<div *ngFor="let tarea of tareas" class="tarea">
+    <div *ngIf="tarea.nombre === 'Estudio'">
+        <p><strong>Tarea:</strong> {{ tarea.texto }}</p>
+        <p><strong>Estado:</strong> {{ tarea.estado }}</p>
+        <p><strong>Fecha de creación:</strong> {{ tarea.fecha_creacion }}</p>
+        
+        <div class="campo">
+            <label for="fechaEstudio">Fecha tentativa:</label>
+            <input type="date" id="fechaEstudio" [(ngModel)]="tarea.fecha_tentativa">
+        </div>
+
+        <button class="btnRojo" (click)="deleteTask(tarea)">Eliminar</button>
+        <button class="btnVerde" (click)="updateTask(tarea)">Guardar Cambios</button>
+        <p>{{ tarea.status }}</p>
+        <hr>
+    </div>
+</div>
+
+<hr>
+
+<h3>Categoría: Trabajo</h3>
+<h4 class="descripcion">Reuniones, informes, tareas laborales, etc.</h4>
+<div *ngFor="let tarea of tareas" class="tarea">
+    <div *ngIf="tarea.nombre === 'Trabajo'">
+        <p><strong>Tarea:</strong> {{ tarea.texto }}</p>
+        <p><strong>Estado:</strong> {{ tarea.estado }}</p>
+        <p><strong>Fecha de creación:</strong> {{ tarea.fecha_creacion }}</p>
+
+        <div class="campo">
+            <label for="fechaTrabajo">Fecha tentativa:</label>
+            <input type="date" id="fechaTrabajo" [(ngModel)]="tarea.fecha_tentativa">
+        </div>
+
+        <button class="btnRojo" (click)="deleteTask(tarea)">Eliminar</button>
+        <button class="btnVerde" (click)="updateTask(tarea)">Guardar Cambios</button>
+        <p>{{ tarea.status }}</p>
+        <hr>
+    </div>
+</div>
+
+<hr>
+
+<h3>Categoría: Social</h3>
+<h4 class="descripcion">Reuniones con familia y amigos</h4>
+<div *ngFor="let tarea of tareas" class="tarea">
+    <div *ngIf="tarea.nombre === 'Social'">
+        <p><strong>Tarea:</strong> {{ tarea.texto }}</p>
+        <p><strong>Estado:</strong> {{ tarea.estado }}</p>
+        <p><strong>Fecha de creación:</strong> {{ tarea.fecha_creacion }}</p>
+
+        <div class="campo">
+            <label for="fechaSocial">Fecha tentativa:</label>
+            <input type="date" id="fechaSocial" [(ngModel)]="tarea.fecha_tentativa">
+        </div>
+
+        <button class="btnRojo" (click)="deleteTask(tarea)">Eliminar</button>
+        <button class="btnVerde" (click)="updateTask(tarea)">Guardar Cambios</button>
+        <p>{{ tarea.status }}</p>
+        <hr>
+    </div>
+</div>
+
+<hr>
+
+<h3>Categoría: Otros</h3>
+<h4 class="descripcion">Cualquier otra agrupación aparte de las anteriores</h4>
+<div *ngFor="let tarea of tareas" class="tarea">
+    <div *ngIf="tarea.nombre === 'Otros'">
+        <p><strong>Tarea:</strong> {{ tarea.texto }}</p>
+        <p><strong>Estado:</strong> {{ tarea.estado }}</p>
+        <p><strong>Fecha de creación:</strong> {{ tarea.fecha_creacion }}</p>
+
+        <div class="campo">
+            <label for="fechaOtros">Fecha tentativa:</label>
+            <input type="date" id="fechaOtros" [(ngModel)]="tarea.fecha_tentativa">
+        </div>
+
+        <button class="btnRojo" (click)="deleteTask(tarea)">Eliminar</button>
+        <button class="btnVerde" (click)="updateTask(tarea)">Guardar Cambios</button>
+        <p>{{ tarea.status }}</p>
+        <hr>
+    </div>
+</div>
