@@ -49,22 +49,6 @@ def iniciar_sesion():
         return jsonify({"mensaje": "Inicio de sesión exitoso", "usuario": dict(usuario), "token": access_token})
     return jsonify({"error": "Credenciales incorrectas"}), 401
 
-@app.route("/usuarios/<int:id>/tareass", methods=["GET"])
-@jwt_required()
-def obtener_Tareas(id): #tareas d eun usuario particular
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-    SELECT t.*, c.nombre, c.descripcion
-    FROM tareas t
-    JOIN categorias c ON t.id_categoria = c.id
-    WHERE t.id_usuario = ?
-    """, (id,))
-    tareas = cursor.fetchall()
-    conn.close()
-    
-    return jsonify([dict(tarea) for tarea in tareas])
-
 @app.route("/usuarios/<int:id>/tareas", methods=["GET"])
 def obtener_tareas(id): 
     conn = get_db_connection()
@@ -127,18 +111,6 @@ def eliminar_tarea(id):
     conn.close()
     
     return jsonify({"mensaje": "Tarea eliminada exitosamente"})
-
-@app.route("/tareas/<int:id>", methods=["GET"])
-def obtener_tarea(id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM tareas WHERE id = ?", (id,))
-    tarea = cursor.fetchone()
-    conn.close()
-    
-    if tarea:
-        return jsonify(dict(tarea))
-    return jsonify({"error": "Tarea no encontrada"}), 404
 
 @app.route("/usuarios/<int:id>", methods=["GET"])
 def obtener_usuario(id):

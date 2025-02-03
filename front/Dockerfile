@@ -1,6 +1,7 @@
 # Usar una imagen base de Node.js
-FROM node:14
+FROM node:20.18.2
 
+RUN mkdir -p /app
 # Establecer el directorio de trabajo
 WORKDIR /app
 
@@ -11,7 +12,7 @@ COPY ./ /app
 RUN npm install
 
 # Construir la aplicación Angular para producción
-RUN ng build
+RUN npm run build --prod
 
 # Exponer el puerto en el que el frontend estará disponible
 EXPOSE 80
